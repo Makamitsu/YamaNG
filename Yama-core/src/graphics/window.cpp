@@ -1,11 +1,12 @@
+#include <GL\glew.h>
 #include "window.h"
+#include "Renderer.h"
 
 #include <GLFW\glfw3.h>
 #include <iostream>
 
 namespace yama {
 	namespace graphics {
-
 
 		void windowResizeCallback(GLFWwindow* window, int width, int height);
 
@@ -18,7 +19,6 @@ namespace yama {
 		void Window::update()
 		{
 			glfwSwapBuffers(mWindow);
-			glfwGetFramebufferSize(mWindow, &mWidth, &mHeight );
 			glfwPollEvents();
 		}
 
@@ -26,11 +26,6 @@ namespace yama {
 		{
 			glfwDestroyWindow(mWindow);
 			glfwTerminate();
-		}
-
-		void Window::clear()
-		{
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
 		bool Window::closed()
@@ -51,13 +46,21 @@ namespace yama {
 				return false;
 			}
 			glfwMakeContextCurrent(mWindow);
+
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+			
+			glewInit();
+
+			glfwSwapInterval(1);
 			glfwSetWindowSizeCallback(mWindow, windowResizeCallback);
+
 			return true;
 		}
 
 		void windowResizeCallback(GLFWwindow* window, int width, int height)
 		{
-			glViewport(0, 0, width, height);
+			GLCall(glViewport(0, 0, width, height));
 		}
 	}
 }
