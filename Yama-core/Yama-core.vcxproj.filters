@@ -77,4 +77,9 @@
       <Filter>Fichiers de ressources\Shader</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\tex\piou.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

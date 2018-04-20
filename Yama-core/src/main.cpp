@@ -17,8 +17,6 @@ int main() {
 
 	Window window("YamaEngine", 800, 600);
 
-	GLCall(glClearColor(0.2f,0.2f,1.0f,1.0f));
-
 	float positions[] = {
 		-0.5f, 0.5f,
 		0.5f, 0.5f,
@@ -62,5 +60,4 @@ int main() {
 		
 		window.update();
 	}
-
 }

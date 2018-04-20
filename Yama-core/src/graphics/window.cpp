@@ -14,6 +14,7 @@ namespace yama {
 			:mTitle(pTitle), mWidth(pWidth), mHeight(pHeight)
 		{
 			init();
+			GLCall(glClearColor(0.2f, 0.2f, 1.0f, 1.0f));
 		}
 
 		void Window::update()
