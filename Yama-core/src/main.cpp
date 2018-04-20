@@ -12,6 +12,10 @@
 #include "graphics\Shader.h"
 #include "graphics\Texture.h"
 
+#include "glm\glm.hpp"
+#include "glm\gtc\matrix_transform.hpp"
+
+
 int main() {
 
 	using namespace yama::graphics;
@@ -27,6 +31,7 @@ int main() {
 		 0.5f,-0.5f,  1.0, 0.0,
 		-0.5f,-0.5f,  0.0, 0.0,
 	};
+
 	unsigned int indices[] = {
 		0, 1, 2,
 		2, 3, 0
@@ -42,12 +47,20 @@ int main() {
 
 	IndexBuffer vi(indices, 6*sizeof(unsigned int));
 
+
+
+	glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+	glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 0.0f, 0.0f));
+
+	glm::mat4 mvp =  proj * view;
+
 	Shader shader("res/shaders/Basic.shader");
 	shader.bind();
 
 	Texture texture("res/tex/piou.png");
 	texture.bind();
 	shader.setUniform1i("u_Texture", 0);
+	shader.setUniformMat4f("u_MVP", mvp);
 
 	va.unbind();
 	vi.unbind();
