@@ -4,11 +4,21 @@
 
 #include "Renderer.h"
 
+enum class VertexBufferElementType {
+	NOCARE,
+	POSITION,
+	NORMAL,
+	SPECULAR,
+	TEX_COORD,
+	_MAX_VALUE
+};
+
 struct VertexBufferElement {
 	unsigned int type;
 	unsigned int count;
 	unsigned char normalize;
 	unsigned int typeSize;
+	VertexBufferElementType dataType;
 };
 
 
@@ -20,10 +30,10 @@ private:
 
 public:
 	VertexBufferLayout() :m_Stride(0) {}
-	
+
 	template<unsigned int TypeEnum, unsigned int TypeSize>
-	void push(unsigned int count) {
-		m_Elements.push_back({ TypeEnum, count, GL_FALSE, TypeSize });
+	void push(unsigned int count, VertexBufferElementType dataType = VertexBufferElementType::NOCARE) {
+		m_Elements.push_back({ TypeEnum, count, GL_FALSE, TypeSize, dataType });
 		m_Stride += count * TypeSize;
 	}
 

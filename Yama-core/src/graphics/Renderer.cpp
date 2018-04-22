@@ -2,6 +2,8 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include "IndexBuffer.h"
+#include "Mesh.h"
+#include "Model.h"
 
 #include <iostream>
 
@@ -26,9 +28,21 @@ bool GLLogCall(const char* function, const char* file, int line) {
 void Renderer::draw(const VertexArray& va, const IndexBuffer& ib, Shader& shader) const
 {
 	shader.bind();
-	//shader.setUniform4f("u_Color", 1.0, 0.0, 0.0, 1.0);
 	va.bind();
 	ib.bind();
 	GLCall(glDrawElements(GL_TRIANGLES, ib.getCount(), GL_UNSIGNED_INT, nullptr));
 
+}
+
+void Renderer::draw(Mesh& mesh, Shader& shader) const
+{
+	shader.bind();
+	mesh.bind();
+	GLCall(glDrawElements(GL_TRIANGLES, mesh.getCount(), GL_UNSIGNED_INT, nullptr));
+}
+
+void Renderer::draw(Model& model, Shader& Shader) const
+{
+	for (Mesh* mesh : model.getMeshes())
+		draw(*mesh, Shader);
 }

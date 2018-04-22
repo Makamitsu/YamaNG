@@ -2,9 +2,11 @@
 
 #include <GL/glew.h>
 
-#include "VertexArray.h"
-#include "Shader.h"
-#include "IndexBuffer.h"
+class Mesh;
+class Model;
+class VertexArray;
+class Shader;
+class IndexBuffer;
 
 
 #define ASSERT(x) if(!(x)) __debugbreak();
@@ -21,8 +23,8 @@ private:
 public:
 	void clear()const;
 	void draw(const VertexArray& va, const IndexBuffer& ib, Shader& Shader) const;
-
-private:
-
+	
+	void draw(Mesh& mesh, Shader& Shader) const;
+	void draw(Model& model, Shader& Shader) const;
 
 };

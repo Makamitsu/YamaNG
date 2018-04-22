@@ -2,43 +2,31 @@
 
 struct GLFWwindow;
 
-namespace yama {
-	namespace graphics {
+class Window
+{
+
+private:
+	int mWidth;
+	int mHeight;
+	const char* mTitle;
+	bool mClosed;
+
+public:
+	GLFWwindow* mWindow;
 
 
-		class Window
-		{
+	Window(const char* pName, int pWidth, int pHeight);
+	~Window();
+	void update();
+	void clear();
+	bool closed();
 
-		private:
-			int mWidth;
-			int mHeight;
-			const char* mTitle;
-			GLFWwindow* mWindow;
-			bool mClosed;
+	inline int getWidth() const { return mWidth; };
+	inline int getHeight() const { return mHeight; };
 
-		public:
-			Window(const char* pName, int pWidth, int pHeight);
-			~Window();
-			void update();
-			void clear();
-			bool closed();
+	Window(const Window&) = delete;
+private:
 
-			inline int getWidth() const { return mWidth; };
-			inline int getHeight() const { return mHeight; };
+	bool init();
 
-			Window(const Window&) = delete;
-		private:
-
-			bool init();
-
-		};
-
-
-
-	}
-}
-
-
-
-
-
+};
