@@ -22,19 +22,33 @@
 #include "glm\gtc\matrix_transform.hpp"
 
 #include "tools\Tools.h"
-#define TIMER(x); Utils::Timer t(#x);x;t.printElapsed();
 
 float posX, posZ= 0;
+bool keys[4] = { false };
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (key == GLFW_KEY_W && action == GLFW_PRESS)
-		posZ += 1.0f;
-	if (key == GLFW_KEY_S && action == GLFW_PRESS)
-		posZ -= 1.0f;
-	if (key == GLFW_KEY_A && action == GLFW_PRESS)
-		posX += 1.0f;
-	if (key == GLFW_KEY_D && action == GLFW_PRESS)
-		posX -= 1.0f;
+	std::cout << posX << " " << posZ << "\n";
+	if (key == GLFW_KEY_W)
+		if (action == GLFW_PRESS)
+			keys[0] = true;
+		if (action == GLFW_RELEASE)
+			keys[0] = false;
+	if (key == GLFW_KEY_S)
+		if (action == GLFW_PRESS)
+			keys[1] = true;
+		if (action == GLFW_RELEASE)
+			keys[1] = false;
+	if (key == GLFW_KEY_A)
+		if (action == GLFW_PRESS)
+			keys[2] = true;
+		if (action == GLFW_RELEASE)
+			keys[2] = false;
+	if (key == GLFW_KEY_D)
+		if (action == GLFW_PRESS)
+			keys[3] = true;
+		if (action == GLFW_RELEASE)
+			keys[3] = false;
+
 }
 
 
@@ -76,18 +90,30 @@ int main() {
 	
 	Renderer renderer;
 
+	Mesh* sapin = model.getMeshes()[0];
+	Mesh* trunk = model.getMeshes()[1];
 
 	float test = 0;
 	while (!window.closed() ) {
 		test += 0.1;
-		glm::mat4 proj = glm::perspective(glm::radians(test),4.0f / test, 0.1f , 100.0f );
+		glm::mat4 proj = glm::perspective(glm::radians(60.0f),4.0f / 3.0f, 0.1f , 100.0f );
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(posX, 0.0f, posZ));
 		glm::mat4 mvp = proj * view;
 		shader.setUniformMat4f("u_MVP", mvp);
 
 		renderer.clear();
 
-		renderer.draw(model, shader);
+
+
+		if (keys[0]) ++posZ;
+		if (keys[1]) --posZ;
+		if (keys[2]) ++posX;
+		if (keys[3]) --posX;
+
+
+
+		renderer.draw(*sapin, shader);
+		renderer.draw(*trunk, shader);
 		
 		window.update();
 	}

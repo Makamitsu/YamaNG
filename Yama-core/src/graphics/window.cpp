@@ -15,6 +15,8 @@ Window::Window(const char* pTitle, int pWidth, int pHeight)
 	GLCall(glClearColor(0.2f, 0.2f, 1.0f, 1.0f));
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+	GLCall(glEnable(GL_DEPTH_TEST));
+	GLCall(glDepthFunc(GL_LESS));
 }
 
 void Window::update()

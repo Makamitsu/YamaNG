@@ -4,6 +4,7 @@
 #include <string>
 
 
+
 namespace Utils {
 
 	class Timer {
@@ -21,8 +22,6 @@ namespace Utils {
 
 
 	};
-
-
-
-
 }
+
+#define TIMER(x); Utils::Timer t(#x);x;t.printElapsed();

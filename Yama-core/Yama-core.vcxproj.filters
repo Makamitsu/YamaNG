@@ -890,6 +890,7 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </None>
     <None Include="res\models\simpleMan2.blend" />
+    <None Include="res\models\simpleLowPolyEnv.blend" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\tex\piou.png">

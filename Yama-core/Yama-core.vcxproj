@@ -341,6 +341,7 @@
     <ClInclude Include="src\vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\models\simpleLowPolyEnv.blend" />
     <None Include="res\models\simpleMan2.blend" />
     <None Include="res\shaders\Basic.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
