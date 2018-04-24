@@ -13,7 +13,6 @@ namespace Utils {
 		Timer(std::string caller);
 		~Timer();
 
-
 		void startRecord();
 		void printElapsed();
 	private:

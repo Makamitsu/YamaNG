@@ -27,7 +27,7 @@ in vec3 v_Normal;
 uniform sampler2D u_Texture;
 
 void main() {
-	vec3 upVector = vec3(0.5, 0.5, 0.0);
+	vec3 upVector = vec3(0.0, 1.0, 0.0);
 
 	//color = texture(u_Texture, v_TexCoord);
 	float dotprod = dot(upVector, v_Normal);

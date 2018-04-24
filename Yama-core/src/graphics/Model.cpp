@@ -24,6 +24,11 @@ void Model::loadModel(std::string& path)
 {
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+
+	aiMaterial* mat;
+	aiColor3D color(0.f, 0.f, 0.f);
+	mat->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
 		std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;

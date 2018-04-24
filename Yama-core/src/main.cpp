@@ -23,32 +23,23 @@
 
 #include "tools\Tools.h"
 
-float posX, posZ= 0;
+float posX= 0;
+float posZ= -30;
 bool keys[4] = { false };
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	std::cout << posX << " " << posZ << "\n";
 	if (key == GLFW_KEY_W)
-		if (action == GLFW_PRESS)
-			keys[0] = true;
-		if (action == GLFW_RELEASE)
-			keys[0] = false;
+		if (action == GLFW_PRESS) keys[0] = true;
+		if (action == GLFW_RELEASE) keys[0] = false;
 	if (key == GLFW_KEY_S)
-		if (action == GLFW_PRESS)
-			keys[1] = true;
-		if (action == GLFW_RELEASE)
-			keys[1] = false;
+		if (action == GLFW_PRESS) keys[1] = true;
+		if (action == GLFW_RELEASE) keys[1] = false;
 	if (key == GLFW_KEY_A)
-		if (action == GLFW_PRESS)
-			keys[2] = true;
-		if (action == GLFW_RELEASE)
-			keys[2] = false;
+		if (action == GLFW_PRESS) keys[2] = true;
+		if (action == GLFW_RELEASE) keys[2] = false;
 	if (key == GLFW_KEY_D)
-		if (action == GLFW_PRESS)
-			keys[3] = true;
-		if (action == GLFW_RELEASE)
-			keys[3] = false;
-
+		if (action == GLFW_PRESS) keys[3] = true;
+		if (action == GLFW_RELEASE) keys[3] = false;
 }
 
 
@@ -93,28 +84,41 @@ int main() {
 	Mesh* sapin = model.getMeshes()[0];
 	Mesh* trunk = model.getMeshes()[1];
 
-	float test = 0;
-	while (!window.closed() ) {
-		test += 0.1;
-		glm::mat4 proj = glm::perspective(glm::radians(60.0f),4.0f / 3.0f, 0.1f , 100.0f );
-		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(posX, 0.0f, posZ));
-		glm::mat4 mvp = proj * view;
-		shader.setUniformMat4f("u_MVP", mvp);
+	glm::mat4 proj = glm::mat4( 1.0f );
+	glm::mat4 view = glm::mat4( 1.0f );
+	glm::mat4 modele = glm::mat4( 1.0f );
 
+	float test = 0.0f;
+	float test2 = 0.0f;
+	while (!window.closed() ) {
 		renderer.clear();
 
+		glm::mat4 proj = glm::perspective( glm::radians( 60.0f ), 4.0f / 3.0f, 0.1f, 100.0f );
+		glm::mat4 view = glm::translate( glm::mat4(1.0f), glm::vec3( posX, 0.0f, posZ ) );
+		glm::mat4 modele = glm::rotate( glm::mat4(1.0f), glm::radians( ++test ), glm::vec3( 0.0f, 1.0f, 0.0f ) );
 
+		shader.setUniformMat4f( "u_MVP", proj * view * modele );
 
 		if (keys[0]) ++posZ;
 		if (keys[1]) --posZ;
 		if (keys[2]) ++posX;
 		if (keys[3]) --posX;
 
+		//renderer.draw(*model.getMeshes()[18], shader);
+		//renderer.draw(*model.getMeshes()[19], shader);
+		//renderer.draw(*model.getMeshes()[20], shader);
 
+		renderer.draw(*model.getMeshes()[21], shader);
+		renderer.draw(*model.getMeshes()[22], shader);
 
-		renderer.draw(*sapin, shader);
-		renderer.draw(*trunk, shader);
-		
+		//renderer.draw(*model.getMeshes()[50], shader);
+		//renderer.draw(*model.getMeshes()[51], shader);
+
+		test2 = (test2) > 54.0f ? 0.0f: test2 += 0.01f;
+		//renderer.draw(*model.getMeshes()[ (int)test2 ], shader);
+
+		std::cout << (int)test2 << std::endl;
+
 		window.update();
 	}
 }
