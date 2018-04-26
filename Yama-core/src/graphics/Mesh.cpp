@@ -28,3 +28,8 @@ void Mesh::bind() const
 	m_VAO.bind();
 	m_IBO.bind();
 }
+
+void Mesh::setMaterial(Material * materialIndex)
+{
+	m_MaterialIndex = materialIndex;
+}

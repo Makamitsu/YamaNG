@@ -5,6 +5,7 @@
 #include "assimp\scene.h"
 
 class Mesh;
+class Material;
 class Texture;
 
 class Model {
@@ -16,8 +17,8 @@ public:
 	std::vector<Mesh*> getMeshes() const { return m_Meshes; };
 private:
 	std::vector<Texture*> textures_loaded;
-
 	std::vector<Mesh*> m_Meshes;
+	std::vector<Material*> m_Materials;
 	std::string m_Directory;
 
 	void loadModel(std::string& path);

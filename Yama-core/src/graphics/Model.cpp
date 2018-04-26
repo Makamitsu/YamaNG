@@ -4,6 +4,7 @@
 #include "VertexBufferLayout.h"
 
 #include <iostream>
+#include <vector>
 
 #include "glm\glm.hpp"
 
@@ -25,9 +26,9 @@ void Model::loadModel(std::string& path)
 	Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
-	aiMaterial* mat;
-	aiColor3D color(0.f, 0.f, 0.f);
-	mat->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+	for (unsigned int i = 0; i < scene->mNumMaterials; ++i) {
+		m_Materials.push_back(&Material(*scene->mMaterials[i]));
+	}
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
@@ -110,8 +111,9 @@ Mesh* Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
-
-	return new Mesh( (void*)VBdata, VBsize, IBdata, IBsize, *layout);
+	Mesh* lMesh = new Mesh( (void*)VBdata, VBsize, IBdata, IBsize, *layout);
+	lMesh->setMaterial( mesh->mMaterialIndex<m_Materials.size() ? m_Materials.at(mesh->mMaterialIndex) : nullptr );
+	return lMesh;
 }
 
 
