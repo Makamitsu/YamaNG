@@ -19,6 +19,11 @@ void Camera::updatePosition()
 	}
 }
 
+void Camera::move(const glm::vec3 & position)
+{
+	Position = Position + position;
+}
+
 Camera::Camera(glm::vec3 position): Position(position)
 {
 }
@@ -41,16 +46,23 @@ glm::mat4 Camera::getProjection() {
 
 glm::mat4 Camera::getView()
 {
+	//static float rot = 0;
+	
 	if (target) {
 		glm::mat4 view(1.0f);
 		view = glm::rotate(view, glm::radians(pitch), glm::vec3(1.0f, 0.0f, 0.0f) );
 		view = glm::rotate(view, glm::radians(yaw), glm::vec3(0.0f, 1.0f, 0.0f) );
-		view = glm::translate(view, Position );
-
+		view = glm::translate(view, -Position );
 		return view;
 	}
+	/*
 	else {
-
+		glm::mat4 view(1.0f);
+		view = glm::rotate(view, glm::radians(pitch), glm::vec3(1.0f, 0.0f, 0.0f));
+		view = glm::rotate(view, glm::radians(yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+		view = glm::translate(view, Position);
+		return view;
 	}
+	*/
 }
 

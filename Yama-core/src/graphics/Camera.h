@@ -26,6 +26,8 @@ public:
 	float yaw;
 	float roll;
 
+	void move(const glm::vec3& position);
+
 	Camera(glm::vec3 position);
 	glm::mat4 initProjection(float fov, float ratio, float near, float far);
 	glm::mat4 getProjection();
