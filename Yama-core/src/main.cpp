@@ -18,6 +18,7 @@
 #include "graphics\Mesh.h"
 #include "graphics\Model.h"
 #include "graphics\Camera.h"
+#include "graphics\Input.h"
 
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"
@@ -83,29 +84,33 @@ int main() {
 	std::cout << "Load OK\n";
 	while (!window.closed() ) {
 
-		glm::vec3 deplacement(0.0f, 0.0f, 0.0f);
-		if (glfwGetKey(window.mWindow, GLFW_KEY_UP) == GLFW_PRESS) ++(deplacement[2]);
-		if (glfwGetKey(window.mWindow, GLFW_KEY_DOWN) == GLFW_PRESS) --deplacement[2];
-		if (glfwGetKey(window.mWindow, GLFW_KEY_LEFT) == GLFW_PRESS) ++deplacement[0];
-		if (glfwGetKey(window.mWindow, GLFW_KEY_RIGHT) == GLFW_PRESS) --deplacement[0];
-		camera.move(deplacement);
+		window.mInput->keyPressed(Key::W, [&](){camera.pitch -= 10.0f; });
+		window.mInput->keyPressed(Key::S, [&](){camera.pitch += 10.0f; });
+		window.mInput->keyPressed(Key::A, [&](){camera.yaw -= 10.0f; });
+		window.mInput->keyPressed(Key::D, [&](){camera.yaw += 10.0f; });
 
-		if (glfwGetKey(window.mWindow, GLFW_KEY_W) == GLFW_PRESS) camera.pitch -= 10.0f;
-		if (glfwGetKey(window.mWindow, GLFW_KEY_S) == GLFW_PRESS) camera.pitch += 10.0f;
-		if (glfwGetKey(window.mWindow, GLFW_KEY_A) == GLFW_PRESS) camera.yaw -= 10.0f;
-		if (glfwGetKey(window.mWindow, GLFW_KEY_D) == GLFW_PRESS) camera.yaw += 10.0f;
+		window.mInput->updateMouse();
+		glm::vec2 mouseDisplacement = window.mInput->getMouseDelta();
+		window.mInput->mousePressed(Mouse::LEFT, [&]() {
+			camera.pitch += mouseDisplacement[1]/10;
+			camera.yaw += mouseDisplacement[0]/10;
+		});
+
+		glm::vec3 deplacement(0.0f, 0.0f, 0.0f);
+		window.mInput->keyPressed(Key::RIGHT, [&]() { ++(deplacement[0]); });
+		window.mInput->keyPressed(Key::LEFT, [&]() { --(deplacement[0]); });
+		window.mInput->keyPressed(Key::DOWN, [&]() { ++(deplacement[2]); });
+		window.mInput->keyPressed(Key::UP, [&]() { --(deplacement[2]); });
+		camera.move(deplacement);
 
 		renderer.clear();
 
 		glm::mat4 modele(1.0f);
 		modele = glm::translate(modele, glm::vec3(0.0f, 0.0f, 0.0f));
 
-		glm::vec3 offset;
-
 		shader.setUniformMat4f( "u_MVP", camera.getProjection() * camera.getView() * modele  );
 
 		renderer.clear();
-
 		renderer.draw(*model.getMeshes()[0], shader);
 		renderer.draw(*model.getMeshes()[1], shader);
 

@@ -1,6 +1,7 @@
 #pragma once
 
 struct GLFWwindow;
+class Input;
 
 class Window
 {
@@ -13,7 +14,7 @@ private:
 
 public:
 	GLFWwindow* mWindow;
-
+	Input* mInput;
 
 	Window(const char* pName, int pWidth, int pHeight);
 	~Window();

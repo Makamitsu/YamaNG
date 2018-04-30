@@ -1,6 +1,7 @@
 #include <GL\glew.h>
 #include "window.h"
 #include "Renderer.h"
+#include "Input.h"
 
 #include <GLFW\glfw3.h>
 #include <iostream>
@@ -27,6 +28,7 @@ void Window::update()
 
 Window::~Window()
 {
+	delete mInput;
 	glfwDestroyWindow(mWindow);
 	glfwTerminate();
 }
@@ -57,6 +59,8 @@ bool Window::init()
 
 	glfwSwapInterval(1);
 	glfwSetWindowSizeCallback(mWindow, windowResizeCallback);
+
+	mInput = new Input(this->mWindow);
 
 	return true;
 }
