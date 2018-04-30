@@ -7,7 +7,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "graphics\window.h"
+#include "window\window.h"
 #include "graphics\Renderer.h"
 #include "graphics\VertexBuffer.h"
 #include "graphics\IndexBuffer.h"
@@ -18,7 +18,8 @@
 #include "graphics\Mesh.h"
 #include "graphics\Model.h"
 #include "graphics\Camera.h"
-#include "graphics\Input.h"
+#include "input\Input.h"
+#include "gui\SimpleGui.h"
 
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"
@@ -81,8 +82,12 @@ int main() {
 	float test = 0.0f;
 	float test2 = 0.0f;
 	
+	SimpleGui gui(window);
+
 	std::cout << "Load OK\n";
 	while (!window.closed() ) {
+
+		gui.beginDraw();
 
 		window.mInput->keyPressed(Key::W, [&](){camera.pitch -= 10.0f; });
 		window.mInput->keyPressed(Key::S, [&](){camera.pitch += 10.0f; });
@@ -114,6 +119,9 @@ int main() {
 		renderer.draw(*model.getMeshes()[0], shader);
 		renderer.draw(*model.getMeshes()[1], shader);
 
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+		gui.draw();
 		window.update();
 	}
 }
