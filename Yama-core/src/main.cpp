@@ -53,20 +53,16 @@ int main() {
 	Shader shader("res/shaders/Basic.shader");
 	shader.bind();
 
-	std::string path = "res/models/simpleLowPolyEnv.blend";
+	std::string path = "res/models/model1.fbx";
 	Model model(path);
 
 	Texture texture("res/tex/piou.png");
 	texture.bind();
-
 	//shader.setUniform1i("u_Texture", 0);
-	
-	//glm::mat4 proj = glm::ortho(-50.0f, 50.0f, -25.0f, 25.5f, -100.0f, 100.0f);
 	
 	Renderer renderer;
 
 	Mesh* sapin = model.getMeshes()[0];
-	Mesh* trunk = model.getMeshes()[1];
 
 	float posX = 10.0f;
 	float posZ = 10.0f;
@@ -80,7 +76,6 @@ int main() {
 	glm::mat4 modele = glm::mat4( 1.0f );
 
 	float test = 0.0f;
-	float test2 = 0.0f;
 	
 	SimpleGui gui(window);
 
@@ -112,13 +107,14 @@ int main() {
 
 		glm::mat4 modele(1.0f);
 		modele = glm::translate(modele, glm::vec3(0.0f, 0.0f, 0.0f));
+		modele = glm::rotate(modele, glm::radians(++test), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		shader.setUniformMat4f( "u_MVP", camera.getProjection() * camera.getView() * modele  );
 
 		renderer.clear();
 		renderer.draw(*model.getMeshes()[0], shader);
-		renderer.draw(*model.getMeshes()[1], shader);
 
+		ImGui::Text("Chargement du model: ok!");
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 		gui.draw();

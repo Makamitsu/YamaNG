@@ -24,7 +24,7 @@ Model::~Model()
 void Model::loadModel(std::string& path)
 {
 	Assimp::Importer importer;
-	const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs| aiProcess_GenSmoothNormals);
 
 	for (unsigned int i = 0; i < scene->mNumMaterials; ++i) {
 		m_Materials.push_back(&Material(*scene->mMaterials[i]));
