@@ -1,7 +1,7 @@
 #include "Model.h"
 #include "Texture.h"
 #include "Mesh.h"
-#include "VertexBufferLayout.h"
+#include "..\graphics\VertexBufferLayout.h"
 
 #include <iostream>
 #include <vector>

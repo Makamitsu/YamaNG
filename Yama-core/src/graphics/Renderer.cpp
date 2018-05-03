@@ -2,8 +2,8 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include "IndexBuffer.h"
-#include "Mesh.h"
-#include "Model.h"
+#include "..\model\Mesh.h"
+#include "..\model\Model.h"
 
 #include <iostream>
 
@@ -31,7 +31,6 @@ void Renderer::draw(const VertexArray& va, const IndexBuffer& ib, Shader& shader
 	va.bind();
 	ib.bind();
 	GLCall(glDrawElements(GL_TRIANGLES, ib.getCount(), GL_UNSIGNED_INT, nullptr));
-
 }
 
 void Renderer::draw(Mesh& mesh, Shader& shader) const

@@ -45,9 +45,6 @@
     <ClCompile Include="src\graphics\IndexBuffer.cpp">
       <Filter>Renderer\source</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\Texture.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="src\vendor\stb_image\stb_image.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -55,15 +52,6 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="src\tools\Tools.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Model.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Mesh.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\Material.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\Camera.cpp">
@@ -90,7 +78,31 @@
     <ClCompile Include="src\gui\SimpleGui.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\Bone.cpp">
+    <ClCompile Include="src\graphics\Transform.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\GameObject.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\Node.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scene\Componant.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model\Model.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model\Mesh.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model\Material.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model\Bone.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model\Texture.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -112,9 +124,6 @@
     </ClInclude>
     <ClInclude Include="src\graphics\VertexBuffer.h">
       <Filter>Renderer\header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Texture.h">
-      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="src\vendor\stb_image\stb_image.h">
       <Filter>Fichiers d%27en-tête</Filter>
@@ -554,15 +563,6 @@
     <ClInclude Include="src\tools\Tools.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\Model.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Mesh.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\Material.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\Camera.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -596,7 +596,31 @@
     <ClInclude Include="src\gui\SimpleGui.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\Bone.h">
+    <ClInclude Include="src\graphics\Transform.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\Node.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\GameObject.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene\Componant.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model\Model.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model\Mesh.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model\Material.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model\Bone.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model\Texture.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Renderer.h"
+#include "..\graphics\Renderer.h"
 #include <string>
 
 class Texture {
