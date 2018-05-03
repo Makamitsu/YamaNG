@@ -7,6 +7,7 @@ class Model;
 class VertexArray;
 class Shader;
 class IndexBuffer;
+class GameObject;
 
 
 #define ASSERT(x) if(!(x)) __debugbreak();
@@ -26,5 +27,6 @@ public:
 	
 	void draw(Mesh& mesh, Shader& Shader) const;
 	void draw(Model& model, Shader& Shader) const;
+	void draw(GameObject& gameObject, Shader& Shader, bool isRecursive = false) const;
 
 };

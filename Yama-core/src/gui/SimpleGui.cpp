@@ -1,6 +1,6 @@
 #include "SimpleGui.h"
 
-#include "..\window\window.h"
+#include "window.h"
 
 
 SimpleGui::SimpleGui(GLFWwindow * pWindow):mWindow(pWindow)

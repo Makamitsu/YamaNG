@@ -58,7 +58,7 @@ int main() {
 
 	Texture texture("res/tex/piou.png");
 	texture.bind();
-	//shader.setUniform1i("u_Texture", 0);
+	shader.setUniform1i("u_Texture", 0);
 	
 	Renderer renderer;
 

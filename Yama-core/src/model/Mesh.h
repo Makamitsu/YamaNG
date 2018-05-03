@@ -1,11 +1,11 @@
 #pragma once
 #include "glm\glm.hpp"
 
-#include "..\graphics\Shader.h"
-#include "..\graphics\VertexArray.h"
-#include "..\graphics\VertexBuffer.h"
-#include "..\graphics\IndexBuffer.h"
-#include "..\graphics\VertexBufferLayout.h"
+#include "Shader.h"
+#include "VertexArray.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+#include "VertexBufferLayout.h"
 #include "Texture.h"
 #include "Material.h"
 

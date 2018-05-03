@@ -1,18 +1,27 @@
 #pragma once
 
+#include <string>
+#include <vector>
+#include <unordered_map>
+
 #include "Componant.h"
 
-#include <unordered_map>
-#include <string>
-#include "Model.h"
+class Model;
+class Transform;
 
-class GameObject {
+class GameObject{
 
 private:
+public:
 	std::unordered_map<std::string, Componant> componants;
 	
-	Model model;
+	GameObject* parent;
+	std::vector<GameObject*> childs;
 
-public:
+	Model* model;
+	Transform* transform;
 
+	GameObject();
+	~GameObject();
+	
 };

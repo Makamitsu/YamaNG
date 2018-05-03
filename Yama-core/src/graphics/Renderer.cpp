@@ -2,8 +2,9 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include "IndexBuffer.h"
-#include "..\model\Mesh.h"
-#include "..\model\Model.h"
+#include "Mesh.h"
+#include "Model.h"
+#include "GameObject.h"
 
 #include <iostream>
 
@@ -44,4 +45,18 @@ void Renderer::draw(Model& model, Shader& Shader) const
 {
 	for (Mesh* mesh : model.getMeshes())
 		draw(*mesh, Shader);
+}
+
+void Renderer::draw(GameObject& gameObject, Shader& Shader, bool isRecursive) const
+{
+	if (gameObject.model) {
+		Model* model = gameObject.model;
+		for (Mesh* mesh : model->getMeshes())
+			draw(*mesh, Shader);
+	}
+
+	if (isRecursive) {
+		for (GameObject* obj : gameObject.childs)
+			draw(*obj, Shader, isRecursive);
+	}
 }

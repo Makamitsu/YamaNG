@@ -1,7 +1,8 @@
 #include <GL\glew.h>
+
 #include "window.h"
-#include "..\graphics\Renderer.h"
-#include "..\input\Input.h"
+#include "Renderer.h"
+#include "Input.h"
 
 #include <GLFW\glfw3.h>
 #include <iostream>

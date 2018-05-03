@@ -48,14 +48,15 @@ glm::mat4 Camera::getView()
 {
 	//static float rot = 0;
 	
-	if (target) {
+	/* if (target) { */
 		glm::mat4 view(1.0f);
 		view = glm::rotate(view, glm::radians(pitch), glm::vec3(1.0f, 0.0f, 0.0f) );
 		view = glm::rotate(view, glm::radians(yaw), glm::vec3(0.0f, 1.0f, 0.0f) );
 		view = glm::translate(view, -Position );
 		return view;
-	}
 	/*
+	}
+	
 	else {
 		glm::mat4 view(1.0f);
 		view = glm::rotate(view, glm::radians(pitch), glm::vec3(1.0f, 0.0f, 0.0f));

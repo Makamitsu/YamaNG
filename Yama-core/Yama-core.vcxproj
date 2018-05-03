@@ -185,7 +185,6 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\scene\Componant.cpp" />
     <ClCompile Include="src\scene\GameObject.cpp" />
-    <ClCompile Include="src\scene\Node.cpp" />
     <ClCompile Include="src\window\window.cpp" />
     <ClCompile Include="src\tools\Tools.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
@@ -213,7 +212,6 @@
     <ClInclude Include="src\graphics\VertexBufferLayout.h" />
     <ClInclude Include="src\scene\Componant.h" />
     <ClInclude Include="src\scene\GameObject.h" />
-    <ClInclude Include="src\scene\Node.h" />
     <ClInclude Include="src\window\window.h" />
     <ClInclude Include="src\tools\Tools.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
