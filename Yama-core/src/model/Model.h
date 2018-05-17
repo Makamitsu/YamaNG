@@ -13,6 +13,11 @@ class Material;
 class Texture;
 class VertexBufferLayout;
 
+struct BoneWeight {
+	unsigned int boneID[NB_BONES_PER_VERTEX];
+	float weight[NB_BONES_PER_VERTEX];
+};
+
 class Model {
 
 public:

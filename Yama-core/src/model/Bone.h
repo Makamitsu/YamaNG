@@ -12,6 +12,7 @@
 class Mesh;
 class Skeleton;
 
+
 static aiMatrix4x4 GLMMat4ToAi(glm::mat4 mat)
 {
 	return aiMatrix4x4(mat[0][0], mat[0][1], mat[0][2], mat[0][3],
@@ -52,7 +53,7 @@ public:
 	std::string name;    //The bone's name as loaded by ASSIMP.
 
 	Mesh* mesh;    //The mesh this bone is going to affect.
-				   //Only one skeleton per mesh one mesh per skeleton is currently supported.
+				   //Only one skeleton per mesh / one mesh per skeleton is currently supported.
 
 	aiNode* node;   //This bone's corresponding aiNode 
 					//(this is where we'll get its transformation matrix,
@@ -88,7 +89,7 @@ public:
 								//YET. We will write it as soon as we are done
 								//with the bone class (Tutorial #3)
 
-	Bone() { name = ""; id = -2; }
+	Bone() { id = -2;  name = "";}
 
 	Bone(Mesh* in_mesh, unsigned int in_id, std::string in_name, aiMatrix4x4 in_o_mat);
 	Bone(Mesh* in_mesh, unsigned int in_id, std::string in_name, glm::mat4 in_o_mat);

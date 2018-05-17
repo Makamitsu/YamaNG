@@ -1,11 +1,17 @@
 #include "VertexBufferLayout.h"
 
+#include <algorithm>
+
 constexpr VertexBufferElement VertexBufferLayout::POSITION = { GL_FLOAT, 3, GL_FALSE, sizeof(float), VertexData::POSITION };
 constexpr VertexBufferElement VertexBufferLayout::NORMAL = { GL_FLOAT, 3, GL_FALSE, sizeof(float), VertexData::NORMAL };
+constexpr VertexBufferElement VertexBufferLayout::COLOR = { GL_FLOAT, 3, GL_FALSE, sizeof(float), VertexData::COLOR };
 constexpr VertexBufferElement VertexBufferLayout::SPECULAR = { GL_FLOAT, 2, GL_FALSE, sizeof(float), VertexData::SPECULAR };
 constexpr VertexBufferElement VertexBufferLayout::TEX_COORD = { GL_FLOAT, 2, GL_FALSE, sizeof(float), VertexData::TEX_COORD };
-constexpr VertexBufferElement VertexBufferLayout::BONES_ID = { GL_UNSIGNED_INT, 1, GL_FALSE, sizeof(unsigned int), VertexData::BONES_ID };
-constexpr VertexBufferElement VertexBufferLayout::BONES_WEIGHT = { GL_FLOAT, 1, GL_FALSE, sizeof(float), VertexData::BONES_WEIGHT };
+constexpr VertexBufferElement VertexBufferLayout::BONE_WEIGHT = { GL_FLOAT, 2, GL_FALSE, sizeof(float), VertexData::BONE_WEIGHT };
+
+std::vector<VertexBufferElement>::const_iterator VertexBufferLayout::find(VertexData pData) {
+	return std::find_if(m_Elements.begin(), m_Elements.end(), [&](VertexBufferElement vecTypeData) {return vecTypeData.dataType == pData; });
+}
 
 template<unsigned int TypeEnum, unsigned int TypeSize>
 void VertexBufferLayout::push(unsigned int count, const VertexData& dataType) {

@@ -78,28 +78,86 @@ Mesh* Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	}
 	unsigned int* IBdata = new unsigned int[IBsize];
 
-	std::vector<Texture> textures;
+	bool hasPosition = false;
+	bool hasNormal = false;
+	bool hasTexCoord = false;
+	unsigned int nbBonesPerVectex = 0;
+	for (auto bufferElement : m_dataLayout.getElements()) {
+		switch (bufferElement.dataType) {
+		case VertexData::POSITION:hasPosition = true; break;
+		case VertexData::NORMAL:hasNormal = true; break;
+		case VertexData::TEX_COORD:hasTexCoord = true; break;
+		case VertexData::BONE_WEIGHT:nbBonesPerVectex++; break;
+		}
+	}
+
+
+	//TODO: bind proprement les id/weight (et positions/normals btw...) au bon endroit selon le layout
+	if (nbBonesPerVectex) {
+		int WEIGHTS_PER_VERTEX = nbBonesPerVectex < NB_BONES_PER_VERTEX ? nbBonesPerVectex : NB_BONES_PER_VERTEX;
+		int boneArraysSize = mesh->mNumVertices*WEIGHTS_PER_VERTEX;
+		std::vector<int> boneIDs;
+		boneIDs.resize(boneArraysSize);
+		std::vector<float> boneWeights;
+		boneWeights.resize(boneArraysSize);
+		for (int i = 0; i<mesh->mNumBones; i++)
+		{
+			aiBone* aiBone = mesh->mBones[i];
+			for (int j = 0; j<aiBone->mNumWeights; j++)
+			{
+				aiVertexWeight weight = aiBone->mWeights[j];
+				unsigned int vertexStart = weight.mVertexId * WEIGHTS_PER_VERTEX;
+				for (int k = 0; k<WEIGHTS_PER_VERTEX; k++){
+					if (boneWeights.at(vertexStart + k) == 0){
+						boneWeights.at(vertexStart + k) = weight.mWeight;
+						boneIDs.at(vertexStart + k) = i;
+						data.at(weight.mVertexId).id[k] = i;
+						data.at(weight.mVertexId).weight[k] = weight.mWeight;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	std::vector<BoneWeight> vecBoneWeight(mesh->mNumBones);
+	for (int i = 0; i < mesh->mNumBones; i++) {
+		aiBone* aiBone = mesh->mBones[i];
+		for (int j = 0; j < aiBone->mNumWeights; j++) {
+
+		}
+	}
 
 	int crs = 0;
-	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+	int layoutCrs = 0;
+	int offset = m_dataLayout.getStride();
+	for (unsigned int i = 0; i < mesh->mNumVertices; i++ )
 	{
-		//positions
-		VBdata[crs++] = mesh->mVertices[i].x;
-		VBdata[crs++] = mesh->mVertices[i].z;
-		VBdata[crs++] = mesh->mVertices[i].y;
-		//normals
-		VBdata[crs++] = mesh->mNormals[i].x;
-		VBdata[crs++] = mesh->mNormals[i].y;
-		VBdata[crs++] = mesh->mNormals[i].z;
-		//texCoord
-		if (mesh->mTextureCoords[0]) {
-			VBdata[crs++] = mesh->mTextureCoords[0][i].x;
-			VBdata[crs++] = mesh->mTextureCoords[0][i].y;
+		offset = m_dataLayout.getStride();
+		if (hasPosition) {
+			VBdata[crs++] = mesh->mVertices[i].x;
+			VBdata[crs++] = mesh->mVertices[i].z;
+			VBdata[crs++] = mesh->mVertices[i].y;
+			offset -= 3 * sizeof(float);
 		}
-		else {
-			VBdata[crs++] = 0.0f;
-			VBdata[crs++] = 0.0f;
+		if (hasNormal) {
+			VBdata[crs++] = mesh->mNormals[i].x;
+			VBdata[crs++] = mesh->mNormals[i].y;
+			VBdata[crs++] = mesh->mNormals[i].z;
+			offset -= 3 * sizeof(float);
 		}
+		if (hasTexCoord) {
+			if (mesh->mTextureCoords[0]) {
+				VBdata[crs++] = mesh->mTextureCoords[0][i].x;
+				VBdata[crs++] = mesh->mTextureCoords[0][i].y;
+			}
+			else {
+				VBdata[crs++] = 0.0f;
+				VBdata[crs++] = 0.0f;
+			}
+			offset -= 2 * sizeof(float);;
+		}
+		crs += offset;
 	}
 
 	crs = 0;
@@ -110,6 +168,7 @@ Mesh* Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			IBdata[crs++] = face.mIndices[j];
 	}
 
+	std::vector<Texture>textures;
 	if (mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];

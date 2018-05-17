@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <map>
 
 #include "Renderer.h"
 
@@ -9,9 +8,9 @@ enum class VertexData {
 	POSITION,
 	NORMAL,
 	SPECULAR,
+	COLOR,
 	TEX_COORD,
-	BONES_ID,
-	BONES_WEIGHT,
+	BONE_WEIGHT
 };
 
 struct VertexBufferElement {
@@ -22,6 +21,7 @@ struct VertexBufferElement {
 	VertexData dataType;
 };
 
+
 class VertexBufferLayout {
 
 private:
@@ -29,7 +29,7 @@ private:
 	unsigned int m_Stride;
 
 public:
-	VertexBufferLayout() :m_Stride(0) {}
+	VertexBufferLayout():m_Stride(0) {}
 
 	template<unsigned int TypeEnum, unsigned int TypeSize>
 	void push(unsigned int count, const VertexData& dataType);
@@ -40,12 +40,14 @@ public:
 	inline const std::vector<VertexBufferElement>& getElements() const { return m_Elements; };
 	inline unsigned int getStride() const { return m_Stride; };
 	
+	std::vector<VertexBufferElement>::const_iterator find(VertexData pData);
+
 	static const VertexBufferElement POSITION;
 	static const VertexBufferElement NORMAL;
+	static const VertexBufferElement COLOR;
 	static const VertexBufferElement SPECULAR;
 	static const VertexBufferElement TEX_COORD;
-	static const VertexBufferElement BONES_ID;
-	static const VertexBufferElement BONES_WEIGHT;
+	static const VertexBufferElement BONE_WEIGHT;
 };
 using DataType = VertexBufferLayout;
 
