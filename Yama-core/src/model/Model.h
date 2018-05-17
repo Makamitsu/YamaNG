@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "assimp\scene.h"
+#include "VertexBufferLayout.h"
 
 #define NB_BONES_PER_VERTEX 4
 
@@ -15,16 +16,20 @@ class VertexBufferLayout;
 class Model {
 
 public:
-	Model(std::string& path, bool hasBones = false);
+	Model(std::string& path);
+	Model(std::string& path, const VertexBufferLayout& dataLayout);
 	~Model();
 
 	std::vector<Mesh*> getMeshes() const { return m_Meshes; };
+
 private:
 	std::vector<Texture*> textures_loaded;
 	std::vector<Mesh*> m_Meshes;
 	std::vector<Material*> m_Materials;
 	std::vector<Bone> m_bones;
 	std::string m_Directory;
+
+	VertexBufferLayout m_dataLayout;
 
 	/* save the node 
 	aiScene* m_scene;
@@ -36,8 +41,6 @@ private:
 	^ fill the vector ^ */
 
 
-	bool m_hasBones;
-
 	void loadModel(std::string& path);
 
 	void processNode(aiNode* node, const aiScene* scene);
@@ -45,9 +48,10 @@ private:
 
 	std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 
-	/************************************************************************************************************/
+	/*
 	Bone* FindBone(std::string name);
 	aiNode* FindAiNode(std::string name);
 	aiNodeAnim* FindAiNodeAnim(std::string name);
 	int FindBoneIDByName(std::string name);
+	*/
 };

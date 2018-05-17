@@ -45,9 +45,9 @@ int main() {
 		2, 3, 0
 	};
 
+	using Data = VertexBufferLayout;
 	VertexBufferLayout layout;
-	layout.push<GL_FLOAT, 4>(2, VertexBufferElementType::POSITION);
-	layout.push<GL_FLOAT, 4>(2, VertexBufferElementType::TEX_COORD);
+	layout[Data::POSITION][Data::TEX_COORD];
 	Mesh mesh(positions, 4 * 4 * sizeof(float), indices, 6 * sizeof(unsigned int), layout);
 
 	Shader shader("res/shaders/Basic.shader");

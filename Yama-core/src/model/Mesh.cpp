@@ -5,9 +5,7 @@ Mesh::Mesh(const void* VBdata, unsigned int VBsize, const unsigned int* IBdata, 
 	m_VAO(), m_VBO(VBdata, VBsize), m_IBO(IBdata, IBsize), m_VBdata(VBdata), m_IBdata(IBdata)
 {
 	VertexBufferLayout layout;
-	layout.push<GL_FLOAT, sizeof(GLfloat)>(3, VertexBufferElementType::POSITION);
-	layout.push<GL_FLOAT, sizeof(GLfloat)>(3, VertexBufferElementType::NORMAL);
-	layout.push<GL_FLOAT, sizeof(GLfloat)>(2, VertexBufferElementType::TEX_COORD);
+	layout[DataType::POSITION][DataType::NORMAL][DataType::TEX_COORD];
 	m_VAO.addBuffer(m_VBO, layout);
 }
 

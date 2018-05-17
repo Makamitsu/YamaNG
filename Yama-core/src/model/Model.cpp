@@ -2,7 +2,6 @@
 #include "Texture.h"
 #include "Mesh.h"
 #include "Bone.h"
-#include "VertexBufferLayout.h"
 
 #include <iostream>
 #include <vector>
@@ -14,10 +13,19 @@
 #include <assimp/postprocess.h>
 
 
-Model::Model(std::string & path, bool hasBones):m_hasBones(hasBones)
-{
+
+
+
+Model::Model(std::string & path) {
+	m_dataLayout = VertexBufferLayout();
+	m_dataLayout[DataType::POSITION][DataType::NORMAL][DataType::TEX_COORD];
 	loadModel(path);
 }
+
+Model::Model(std::string& path, const VertexBufferLayout& dataLayout):m_dataLayout(dataLayout){
+	loadModel(path);
+};
+
 
 Model::~Model()
 {
@@ -58,18 +66,7 @@ void Model::processNode(aiNode* node, const aiScene* scene)
 
 Mesh* Model::processMesh(aiMesh* mesh, const aiScene* scene)
 {
-	VertexBufferLayout* layout = new VertexBufferLayout();
-	layout->push<GL_FLOAT, 4>(3, VertexBufferElementType::POSITION);
-	layout->push<GL_FLOAT, 4>(3, VertexBufferElementType::NORMAL);
-	layout->push<GL_FLOAT, 4>(2, VertexBufferElementType::TEX_COORD);
-
-	if (m_hasBones)
-		for (int i = 0; i < NB_BONES_PER_VERTEX; i++) {
-			layout->push<GL_UNSIGNED_INT, 4>(1, VertexBufferElementType::BONES_ID);
-			layout->push<GL_FLOAT, 4>(1, VertexBufferElementType::BONES_ID);
-		}
-
-	unsigned int VBsize = mesh->mNumVertices * layout->getStride();
+	unsigned int VBsize = mesh->mNumVertices * m_dataLayout.getStride();
 	float* VBdata = new float[VBsize];
 
 	unsigned int IBsize = 0;
@@ -123,7 +120,7 @@ Mesh* Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
-	Mesh* lMesh = new Mesh( (void*)VBdata, VBsize, IBdata, IBsize, *layout);
+	Mesh* lMesh = new Mesh( (void*)VBdata, VBsize, IBdata, IBsize, m_dataLayout);
 	lMesh->setMaterial( mesh->mMaterialIndex<m_Materials.size() ? m_Materials.at(mesh->mMaterialIndex) : nullptr );
 	return lMesh;
 }
