@@ -10,6 +10,7 @@
 #include <assimp/scene.h>
 
 class Mesh;
+class Skeleton;
 
 static aiMatrix4x4 GLMMat4ToAi(glm::mat4 mat)
 {
@@ -44,4 +45,53 @@ static glm::mat4 AiToGLMMat4(aiMatrix4x4& in_mat)
 	return tmp;
 }
 
+class Bone
+{
+public:
+	unsigned int id;
+	std::string name;    //The bone's name as loaded by ASSIMP.
 
+	Mesh* mesh;    //The mesh this bone is going to affect.
+				   //Only one skeleton per mesh one mesh per skeleton is currently supported.
+
+	aiNode* node;   //This bone's corresponding aiNode 
+					//(this is where we'll get its transformation matrix,
+					//as well as its parent and children nodes.
+
+	aiNodeAnim* animNode;    //This is the bone's corresponding aiNodeAnim,
+							 //where we'll get info for this bone's current
+							 //animation. Remember that this node contains
+							 //the keyframes for every animation this bone has,
+							 //when we eventually start switching animations,
+							 //we won't be changing which aiNodeAnim this
+							 //variable points to, but rather at which point in 
+							 //this massive array of keyframes we wish to start.
+
+
+	Bone* parent_bone;    //A pointer to this bone's parent bone.
+	glm::mat4 parent_transforms;    //This is a concatenation of all transforms
+									//before this bone, from this bone's parent,
+									//all the way to the skeleton's root node.
+									//This is used when calculating the current
+									//keyframe's transformation.
+
+	glm::mat4 offset_matrix;    //The offset matrix, and correct me if I'm wrong
+								//about this, is the matrix that transforms from
+								//the bone's local space to its world space.
+								//Think of it as being like a model matrix, 
+								//transforming vertices from their default
+								//positions relative to the mesh, into their new
+								//positions in world space.
+
+	Skeleton* parent_skeleton;  //The parent skeleton of this bone.
+								//Note that the skeleton class does not exist
+								//YET. We will write it as soon as we are done
+								//with the bone class (Tutorial #3)
+
+	Bone() { name = ""; id = -2; }
+
+	Bone(Mesh* in_mesh, unsigned int in_id, std::string in_name, aiMatrix4x4 in_o_mat);
+	Bone(Mesh* in_mesh, unsigned int in_id, std::string in_name, glm::mat4 in_o_mat);
+
+	glm::mat4 GetParentTransforms();
+};

@@ -10,6 +10,8 @@ enum class VertexBufferElementType {
 	NORMAL,
 	SPECULAR,
 	TEX_COORD,
+	BONES_ID,
+	BONES_WEIGHT,
 	_MAX_VALUE
 };
 
@@ -39,6 +41,4 @@ public:
 
 	inline const std::vector<VertexBufferElement>& getElements() const { return m_Elements; };
 	inline unsigned int getStride() const { return m_Stride; };
-
-
 };
